@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI & FB Ads Bootcamp</title>
+  <style>
+    /* Reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fefefe;
+      color: #333;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+      min-height: 2000px; /* For demo scroll */
+      padding-bottom: 80px; /* space for fixed button */
+    }
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: linear-gradient(90deg, #8e44ad, #2980b9);
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem;
+      transition:
+        background-color 0.3s ease,
+        padding 0.3s ease,
+        font-size 0.3s ease,
+        opacity 0.4s ease,
+        transform 0.4s ease;
+      transform-origin: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      user-select: none;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      transition: font-size 0.3s ease;
+    }
+    header p {
+      font-size: 1.3rem;
+      margin-top: 0.5rem;
+      color: #ffeaa7;
+      font-weight: bold;
+      transition: font-size 0.3s ease, color 0.3s ease;
+    }
+    /* Shrunk header style */
+    header.shrunk {
+      padding: 1.2rem 1rem;
+      background: rgba(142, 68, 173, 0.9);
+    }
+    header.shrunk h1 {
+      font-size: 1.8rem;
+    }
+    header.shrunk p {
+      font-size: 1rem;
+      color: #ffecb3;
+    }
+    /* Hide header with zoom out */
+    header.hidden {
+      opacity: 0;
+      transform: scale(0.85);
+      pointer-events: none;
+    }
+
+    /* SECTION BASE */
+    .section {
+      padding: 3rem 1.5rem;
+      max-width: 950px;
+      margin: auto;
+      animation: fadeIn 1s ease;
+    }
+
+    /* REGISTER BOX */
+    .register-box {
+      background: linear-gradient(145deg, #ffffff, #f9f9f9);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      animation: popIn 1s ease;
+    }
+
+    /* HIGHLIGHTED TEXT */
+    .highlight {
+      color: #d63031;
+      font-weight: bold;
+    }
+    .bonus {
+      background: #ffe0e0;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-left: 5px solid #d63031;
+      font-weight: 500;
+    }
+
+    /* CTA BUTTON */
+    .cta-button {
+      background: linear-gradient(90deg, #e84393, #6c5ce7);
+      color: #fff;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: inline-block;
+      border-radius: 30px;
+      margin-top: 1rem;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      user-select: none;
+    }
+    .cta-button:hover {
+      background: linear-gradient(90deg, #00cec9, #0984e3);
+      transform: scale(1.05);
+    }
+
+    /* BENEFITS LIST */
+    ul.benefits {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+    }
+    ul.benefits li {
+      background: #ecf0f1;
+      margin: 0.5rem 0;
+      padding: 0.75rem 1rem;
+      border-left: 5px solid #00b894;
+      font-weight: 500;
+      transition: transform 0.3s ease;
+      border-radius: 5px;
+      cursor: default;
+    }
+    ul.benefits li:hover {
+      transform: translateX(10px);
+      background: #dfe6e9;
+    }
+
+    /* TEXT BOX */
+    .text-box {
+      background: #ffeaa7;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    .text-box strong {
+      color: #d63031;
+    }
+    .text-box em {
+      display: block;
+      margin-top: 1rem;
+      font-style: italic;
+      color: #6c5ce7;
+    }
+
+    /* FAQ */
+    .faq {
+      max-width: 950px;
+      margin: 2rem auto;
+      padding: 1rem 1.5rem;
+    }
+    .faq h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #6c5ce7;
+    }
+    .faq-item {
+      background: #f0f4f8;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border-left: 5px solid #6c5ce7;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .faq-item:hover {
+      background-color: #dfe6f9;
+    }
+    .faq-question {
+      font-weight: 600;
+      padding: 1rem 1.5rem;
+    }
+    .faq-answer {
+      padding: 0 1.5rem 1rem 1.5rem;
+      font-size: 0.95rem;
+      display: none;
+      color: #333;
+      line-height: 1.4;
+    }
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: linear-gradient(90deg, #1d3557, #457b9d);
+      color: white;
+      margin-top: 2rem;
+      animation: fadeIn 2s ease;
+      user-select: none;
+    }
+
+    /* FIXED FLOATING REGISTER BUTTON */
+    .fixed-cta-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: linear-gradient(90deg, #e84393, #6c5ce7);
+      color: #fff;
+      padding: 1rem 1.8rem;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(104, 44, 120, 0.5);
+      z-index: 1100;
+      transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+      user-select: none;
+    }
+    .fixed-cta-btn:hover {
+      background: linear-gradient(90deg, #00cec9, #0984e3);
+      transform: scale(1.1);
+    }
+    /* Hide with zoom out */
+    .fixed-cta-btn.hidden {
+      opacity: 0;
+      transform: scale(0.85);
+      pointer-events: none;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes popIn {
+      0% {transform: scale(0.8); opacity: 0;}
+      100% {transform: scale(1); opacity: 1;}
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      header.shrunk h1 {
+        font-size: 1.3rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      header.shrunk p {
+        font-size: 0.85rem;
+      }
+      .section {
+        padding: 2rem 1rem;
+      }
+      .register-box {
+        padding: 1.5rem;
+      }
+      ul.benefits li {
+        font-size: 0.95rem;
+      }
+      .fixed-cta-btn {
+        padding: 0.8rem 1.2rem;
+        font-size: 1rem;
+        bottom: 15px;
+        right: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Digital Marketing Bootcamp</h1>
+  <p>फक्त ₹199/- | LIVE at 7 PM | Limited Seats</p>
+</header>
+
+<section class="section">
+  <div class="register-box">
+    <h2>🎁 Unlock Bonuses Worth ₹12,000</h2>
+    <p class="bonus">Register before <strong>7 PM, 9 June 2025</strong> to receive exclusive bonuses!</p>
+    <a href="#register" class="cta-button">Register Now</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="text-box">
+    का तुमच्या व्यवसायाला नियमित CUSTOMER मिळत नाहीत?<br /><br />
+    हे तुमचे प्रयत्न कमी आहेत म्हणून नाही, किंवा तुमचा प्रोडक्ट वाईट आहे म्हणून नाही.<br /><br />
+    <strong>खरं कारण आहे चुकीची मार्केटिंग पद्धत.</strong><br /><br />
+    चला बघू कसे Facebook Ad Funnel Strategy वापरून <strong>14 दिवसांत नियमित, चांगले लीड्स</strong> मिळवून <strong>नफा 2X</strong> वाढवता येईल.<br /><br />
+    <strong>( पुढील 1 दिवस माझ्यासोबत काम करा, तुमचा डिजिटल प्रवास सुरू करा. )</strong><br /><br />
+    <em>📅 Bootcamp is on 9 JUN 2025 at 7 PM</em>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <h2>LIVE WORKSHOP: 9 जून 2025, रात्री 7PM</h2>
+  <p>30,000+ लोकांनी सहभाग घेतला! आता तुमची वेळ आहे.</p>
+  <button class="cta-button" onclick="payNow()">Register Now</button>
+  <p class="highlight">बोनस मिळवा ₹12,000 चे!</p>
+</section>
+
+<section class="section">
+  <h3>या बूटकॅम्पमध्ये तुम्ही काय शिकाल?</h3>
+  <ul class="benefits">
+    <li>3-Step Method To Make Faceless Video Ads Using ChatGPT</li>
+    <li>AI टूल्सने व्यवसाय खर्च कमी आणि महसूल वाढवा</li>
+    <li>FB Ads साठी High-Converting Framework</li>
+    <li>AI वापरून Ad Copy, Graphics आणि Funnel तयार करा</li>
+    <li>FB Ad Account Perfect Setup – 30 मिनिटात</li>
+    <li>Automated Funnel Create करा आणि Scale करा</li>
+  </ul>
+</section>
+
+<section class="section">
+  <h3>हे तुमच्यासाठी योग्य आहे का?</h3>
+  <ul class="benefits">
+    <li>तुम्हाला क्लायंट आणि विक्री मिळवायची आहे पण सुरुवात कुठून करावी हे कळत नाही</li>
+    <li>तुमच्याकडे बजेट कमी आहे आणि फ्रीलांसरला पैसे देऊ शकत नाही</li>
+    <li>तुम्ही सुरुवातीला आहात आणि अनुभव नाही</li>
+    <li>तुम्हाला Automated FB Funnel पाहिजे</li>
+    <li>तुमचे Existing Ads Conversion देत नाहीत</li>
+    <li>तुम्हाला Ad Funnel 3 तासांत लाँच करायचे आहे</li>
+  </ul>
+</section>
+
+<section class="section">
+  <h3>Trainer बद्दल:</h3>
+  <p>किरण हजारे - संस्थापक, Sunkiran Dimex Company</p>
+  <p>₹50 लाखांहून अधिक FB/IG Ads खर्च अनुभव, 9000+ लोकांना ट्रेनिंग</p>
+  <p>या बूटकॅम्पमध्ये मी माझा संपूर्ण FB Funnel सिस्टम step-by-step दाखवणार आहे!</p>
+</section>
+
+<section class="faq">
+  <h3>सतत विचारले जाणारे प्रश्न</h3>
+  <div class="faq-item">
+    <div class="faq-question">BOOTCAMP केव्हा आणि कुठे आहे आणि किती वेळ असेल?</div>
+    <div class="faq-answer">
+      9 जून 2025, संध्याकाळी 7 वाजता Zoom वर LIVE, अंदाजे 2-3 तास.
+    </div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">ही कार्यशाळा कोणासाठी आहे?</div>
+    <div class="faq-answer">कोणत्याही व्यवसायासाठी योग्य - Beginner ते Advanced पर्यंत.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">कार्यशाळा सुरू होण्यापूर्वी मी काय तयार केले पाहिजे?</div>
+    <div class="faq-answer">मोबाईल/लॅपटॉप आणि चांगले इंटरनेट कनेक्शन आवश्यक आहे.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">मला बूटकॅम्पचे रेकॉर्डिंग मिळेल का?</div>
+    <div class="faq-answer">होय, कार्यशाळेनंतर रेकॉर्डिंग उपलब्ध होईल.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question">मी पेमेंट केले परंतु कोणतेही UPDATE आले नाही?</div>
+    <div class="faq-answer">
+      कृपया आपल्या ईमेल व SPAM फोल्डर तपासा किंवा आमच्या टीमशी संपर्क करा.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 AI & FB Ads Bootcamp. All rights reserved.</p>
+</footer>
+
+<!-- Fixed floating Register button -->
+<button class="fixed-cta-btn" onclick="payNow()">Register Now</button>
+
+<script>
+  // Pay button placeholder function
+  function payNow() {
+    alert('Payment flow will start here.');
+  }
+
+  // Header & Button scroll behavior
+  let lastScrollTop = 0;
+  const header = document.querySelector('header');
+  const ctaBtn = document.querySelector('.fixed-cta-btn');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if(scrollTop > lastScrollTop && scrollTop > 50){
+      // Scroll down - hide header and button
+      header.classList.add('hidden');
+      ctaBtn.classList.add('hidden');
+      header.classList.remove('shrunk');
+    } else {
+      // Scroll up - show header and button
+      header.classList.remove('hidden');
+      ctaBtn.classList.remove('hidden');
+
+      if(scrollTop > 80){
+        header.classList.add('shrunk');
+      } else {
+        header.classList.remove('shrunk');
+      }
+    }
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+  });
+
+  // FAQ accordion toggle
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    item.querySelector('.faq-question').addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
